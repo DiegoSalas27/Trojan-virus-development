@@ -31,7 +31,9 @@ int main()
 	bind(sock, (struct sockaddr *) &server_address, sizeof(server_address));
 	listen(sock, 5);
 	client_length = sizeof(client_address);
-	client_socket = accept(sock, (struct sockaddr *) &client_address, &client_length);
+	client_socket = accept(sock, (struct sockaddr *) &client_address, &clientlength);
+
+	printf("Server initiated, waiting for th
 
 	while(1) {
 		jump:
